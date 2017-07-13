@@ -93,7 +93,7 @@ void loop() {
     lcd.setCursor(0, 1);
     lcd.print(filestem);
 
-    uint8_t buttons = lcd.readButtons();
+    uint8_t buttons = lcd.readButtons(); //Test buttons
 
     if (buttons) {
       lcd.clear();
@@ -135,7 +135,7 @@ void loop() {
     strcpy(filename, filestem);
     strcat(filename, "000.csv");
     int i = 1;
-    while (SD.exists(filename)) {
+    while (SD.exists(filename)) { //Search for lowest uncreated filenumber
       strcpy(filename, filestem);
       sprintf(pad, "%03d", i);
       strcat(filename, pad);
@@ -143,9 +143,9 @@ void loop() {
       i++;
     }
     file = SD.open(filename, FILE_WRITE);
-    state = 2;
+    state = 2; //Go to logging state
   }
-  if (state == 2) {
+  if (state == 2) { //Logging state
 
     char c = port.read();
     if (c != -1) {
@@ -161,7 +161,7 @@ void loop() {
       }
     }
 
-    uint8_t buttons = lcd.readButtons();
+    uint8_t buttons = lcd.readButtons(); // Test for select button
     if (buttons) {
       if (buttons & BUTTON_SELECT) {
         state = 3; //Enter potential exit state
@@ -169,9 +169,9 @@ void loop() {
       }
     }
   }
-  if (state == 3) {
+  if (state == 3) { //Potential exit state. Still logs data, but doesn't display it.
     lcd.setCursor(0, 0);
-    lcd.print("Exit      Return");
+    lcd.print("Exit      Return"); 
     lcd.setCursor(0, 1);
     lcd.print("<<<          >>>");
     char c = port.read();
@@ -179,19 +179,19 @@ void loop() {
       file.print(c);
     }
 
-    uint8_t buttons = lcd.readButtons();
+    uint8_t buttons = lcd.readButtons(); //Test buttons to see if a choice has been made
     if (buttons) {
       if (buttons & BUTTON_RIGHT) {
-        state = 2; //Exit potential exit state
+        state = 2; //Exit potential exit state and return to the logging state
         lcd.clear();
       }
       if (buttons & BUTTON_LEFT) {
-        file.close();
-        lcd.clear();
+        file.close();  //Close aka save file
+        lcd.clear();   //Display a haltlike message
         lcd.setCursor(0, 0);
         lcd.print("File saved.");
         state = 13; //Exit state
-        return;
+        return; //Break out of the loop
 
       }
     }
