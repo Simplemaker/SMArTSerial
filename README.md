@@ -13,4 +13,4 @@ SMArTSerial can:
 
 For logging data from scales, meters, and other serial devices, SMArTSerial can be used in setups that cost less than $100.
 
-For a full guide on how to use, see the guide.txt file.
+For a full guide on how to use, see the Guide.txt file.
