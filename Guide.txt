@@ -1,0 +1,36 @@
+Guide to use of the SMArTSerial software
+
+Use of the SMArTSerial software requires:
+An (preferably ATMEGA328 based) 5v arduino, such as the UNO or Nano
+The Adafruit Micro-SD card slot (PRODUCT ID: 254)
+    Must be connected to pins 10(CS), 11(DI), 12(DO), 13(CLK)
+The Adafruit RGB i2c display (PRODUCT ID: 714)
+    Must be connected with 5v to 5v, GND to GND,Reset to Reset, A4 to A4, and A5 to A5
+A NulSom RS232 to TTL Converter (http://a.co/iI8TWTy)
+    Must be connected with 5v to VCC, GND to GND, pin 7 to the send pin (arrow next to VCC) and pin 6 to the recieve pin (arrow next to GND)
+A null modem
+
+Once the hardware is setup, flash the Arduino (or compatible) with the SMArTSerial.ino sketch.
+The Logger is now ready for use.
+
+To operate the Datalogger, first insert an SD card, Then power the Arduino. 
+If the SD card is not found or compatible, the display will read "card failure".
+Otherwise, there will be a filename prompt on the display. 
+ The UP and DOWN buttons are used to change the selected character. Characters can be from A - Z, or a hyphen.
+ The LEFT and RIGHT buttons are used to select a character to change.
+ Use the SELECT button when you are done naming your file.
+The filename will consist of the 5-character string, a 3 digit number (000 - 999), and the .csv file ending.
+While using the same 5-character string, the 3 digit number default to the next unused number.
+The Datalogger will then show a cleared screen. 
+Any serial data recieved will be printed to the screen, and stored on the SD card.
+ Pressing SELECT will open the exit prompt
+During the exit prompt, serial data is still written to the SD card, but will not be shown on the display.
+ Pressing RIGHT will return to the standard logging interface.
+ Pressing LEFT will close the file and terminate the program.
+Once terminated, the SD card and power can be safely removed.
+
+Extra Notes:
+ A null modem adapter is reqired.
+ The baud rate is not changeable on the device. The baud must be changed by modifying the software sketch.
+     The portion of code that declares the baud rate is heavily commented so as to be easily found.
+     Simply change the 9600 to the baud you require.
